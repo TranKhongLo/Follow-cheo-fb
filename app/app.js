@@ -6,13 +6,14 @@ const fbInput = document.getElementById("facebook");
 let users = [
   {
     name: "Dung Nguyen",
-    fbUsername: "dungnguyenvl",
     fbUrl: "https://facebook.com/dungnguyenvl"
   }
 ];
 
-function avatarUrl(username) {
-  return `https://graph.facebook.com/${username}/picture?type=large`;
+function avatar(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(
+    name
+  )}&background=6c63ff&color=fff&size=256`;
 }
 
 function renderUsers() {
@@ -24,18 +25,14 @@ function renderUsers() {
 
     card.innerHTML = `
       <div class="avatar">
-        <img 
-          src="${avatarUrl(user.fbUsername)}"
-          alt="${user.name}"
-          onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6c63ff&color=fff'"
-        />
+        <img src="${avatar(user.name)}" alt="${user.name}" />
       </div>
 
       <strong>${user.name}</strong>
 
-      <a href="${user.fbUrl}" target="_blank">🔗 Facebook</a>
+      <a href="${user.fbUrl}" target="_blank">🔗 Mở Facebook</a>
 
-      <span class="badge user">FB USER</span>
+      <span class="badge">FB USER</span>
     `;
 
     usersEl.appendChild(card);
@@ -46,22 +43,11 @@ form.addEventListener("submit", e => {
   e.preventDefault();
 
   const name = nameInput.value.trim();
-  const fbLink = fbInput.value.trim();
+  const fb = fbInput.value.trim();
 
-  if (!name || !fbLink) return;
+  if (!name || !fb) return;
 
-  const username = fbLink
-    .replace(/^https?:\/\//, "")
-    .replace("www.", "")
-    .replace("facebook.com/", "")
-    .replace("/", "");
-
-  users.push({
-    name,
-    fbUsername: username,
-    fbUrl: `https://facebook.com/${username}`
-  });
-
+  users.push({ name, fbUrl: fb });
   renderUsers();
   form.reset();
 });
