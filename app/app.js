@@ -3,9 +3,25 @@ const result = document.getElementById("result");
 
 let users = [];
 
-// Lấy chữ cái avatar
-function getInitial(name) {
-  return name ? name.trim().charAt(0).toUpperCase() : "?";
+/**
+ * Lấy username hoặc ID từ link Facebook
+ */
+function extractFacebookId(url) {
+  try {
+    const u = new URL(url);
+
+    // facebook.com/username
+    const path = u.pathname.replace("/", "");
+
+    if (path && path !== "profile.php") {
+      return path;
+    }
+
+    // facebook.com/profile.php?id=123
+    return u.searchParams.get("id");
+  } catch {
+    return null;
+  }
 }
 
 // Render users
@@ -18,11 +34,24 @@ function renderUsers() {
   }
 
   users.forEach((user) => {
+    const fbId = extractFacebookId(user.fb);
+
+    const avatarUrl = fbId
+      ? `https://graph.facebook.com/${fbId}/picture?type=large`
+      : "";
+
     const card = document.createElement("div");
     card.className = "user-card";
 
     card.innerHTML = `
-      <div class="avatar">${getInitial(user.name)}</div>
+      <div class="avatar">
+        ${
+          avatarUrl
+            ? `<img src="${avatarUrl}" alt="avatar" />`
+            : ""
+        }
+      </div>
+
       <strong>${user.name}</strong>
 
       <a href="${user.fb}" target="_blank" rel="noopener noreferrer">
@@ -48,7 +77,10 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  if (!fb.startsWith("https://facebook.com") && !fb.startsWith("https://www.facebook.com")) {
+  if (
+    !fb.startsWith("https://facebook.com") &&
+    !fb.startsWith("https://www.facebook.com")
+  ) {
     alert("Link Facebook không hợp lệ");
     return;
   }
