@@ -1,60 +1,69 @@
-const form = document.getElementById("userForm");
-const loading = document.getElementById("loading");
+// ====== STATE ======
+const form = document.getElementById("addUserForm");
 const result = document.getElementById("result");
 
-function getInitials(name = "?") {
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .substring(0, 2)
-    .toUpperCase();
+// Danh sách user (tạm thời lưu trong bộ nhớ)
+let users = [];
+
+// ====== UTILS ======
+function getInitial(name) {
+  if (!name) return "?";
+  return name.trim().charAt(0).toUpperCase();
 }
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  loading.classList.remove("hidden");
-  result.classList.add("hidden");
+// ====== RENDER USERS ======
+function renderUsers() {
   result.innerHTML = "";
 
-  try {
-    const res = await fetch(
-      "https://social-api.dungnguyen68783979.workers.dev/users"
-    );
-    const users = await res.json();
-
-    if (!users.length) {
-      result.innerHTML = "<div>❌ Không có user nào</div>";
-    } else {
-      users.forEach((user, index) => {
-        const card = document.createElement("div");
-        card.className = "user-card";
-
-        card.innerHTML = `
-          <div class="avatar">
-            ${getInitials(user.name || "U")}
-          </div>
-
-          <div class="user-info">
-            <div class="user-name">${user.name || "Unknown User"}</div>
-            <div class="user-meta">User ID: ${user.id || index + 1}</div>
-          </div>
-
-          <div class="badge">
-            ACTIVE
-          </div>
-        `;
-
-        result.appendChild(card);
-      });
-    }
-
-    result.classList.remove("hidden");
-  } catch (err) {
-    result.innerHTML = "<div>⚠️ Lỗi khi gọi API</div>";
-    result.classList.remove("hidden");
-  } finally {
-    loading.classList.add("hidden");
+  if (users.length === 0) {
+    result.innerHTML = "<p>Chưa có user nào.</p>";
+    return;
   }
+
+  users.forEach((user) => {
+    const card = document.createElement("div");
+    card.className = "user-card";
+
+    card.innerHTML = `
+      <div class="avatar">${getInitial(user.name)}</div>
+      <strong>${user.name}</strong>
+      <div>${user.email}</div>
+      <span class="badge ${user.role}">${user.role}</span>
+    `;
+
+    result.appendChild(card);
+  });
+}
+
+// ====== HANDLE FORM SUBMIT ======
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const roleSelect = document.getElementById("role");
+
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const role = roleSelect.value;
+
+  if (!name || !email) {
+    alert("Vui lòng nhập đầy đủ thông tin");
+    return;
+  }
+
+  const newUser = {
+    id: Date.now(),
+    name,
+    email,
+    role,
+  };
+
+  users.push(newUser);
+
+  renderUsers();
+  form.reset();
 });
+
+// ====== INIT ======
+renderUsers();
