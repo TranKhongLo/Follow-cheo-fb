@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Mini Social App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Follow Chéo FB</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>👥 Mini Social App</h1>
+  <h1>Follow chéo Facebook</h1>
 
-  <div id="users"></div>
+  <div class="box">
+    <input id="username" placeholder="Nhập username" />
+    <button onclick="addUser()">Thêm</button>
+  </div>
+
+  <h2>Danh sách users</h2>
+  <ul id="userList"></ul>
 
   <script src="app.js"></script>
 </body>
