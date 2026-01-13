@@ -5,8 +5,7 @@ const fbInput = document.getElementById("facebook");
 
 let users = [
   {
-    name: "Dung Nguyen",
-    fbUrl: "https://facebook.com/dungnguyenvl"
+    
   }
 ];
 
