@@ -4,72 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mini Social App</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <!-- ================= HEADER ================= -->
-  <header class="app-header">
-    <h1>📋 Danh sách users</h1>
-    <p>Mini Social App – Cloudflare Pages</p>
-  </header>
 
-  <!-- ================= MAIN ================= -->
-  <main class="container">
+<header class="app-header">
+  <h1>Mini Social App</h1>
+</header>
 
-    <!-- ===== FORM ADD USER ===== -->
-    <section class="form-section">
-      <h2>➕ Thêm user Facebook</h2>
+<main class="container">
 
-      <form id="userForm" autocomplete="off">
-        <div class="form-group">
-          <label for="name">Tên hiển thị</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="Ví dụ: dungnguyen"
-            required
-          />
-        </div>
+  <section class="form-section">
+    <form id="userForm">
+      <input id="name" placeholder="Tên hiển thị" required />
+      <input id="facebook" placeholder="https://facebook.com/username" required />
+      <button type="submit">➕ Thêm user</button>
+    </form>
+  </section>
 
-        <div class="form-group">
-          <label for="facebook">Link Facebook</label>
-          <input
-            type="url"
-            id="facebook"
-            placeholder="https://facebook.com/username"
-            required
-          />
-        </div>
+  <!-- QUAN TRỌNG: PHẢI LÀ id="users" -->
+  <section class="users-section">
+    <div id="users" class="users-grid"></div>
+  </section>
 
-        <button type="submit" class="btn-primary">
-          ➕ Thêm user
-        </button>
-      </form>
-    </section>
+</main>
 
-    <!-- ===== USER LIST ===== -->
-    <section class="users-section">
-      <div id="users" class="users-grid"></div>
-    </section>
-
-  </main>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="app-footer">
-    <p>
-      © 2026 · Mini Social App · Built with ❤️ & Cloudflare Pages
-    </p>
-  </footer>
-
-  <!-- JS -->
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
