@@ -2,20 +2,56 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Follow Chéo FB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Mini Social App</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Follow chéo Facebook</h1>
+  <main class="container">
+    <!-- HEADER -->
+    <header>
+      <h1>👥 Mini Social App</h1>
+      <p class="subtitle">
+        Demo UI + API với Cloudflare Workers & Pages
+      </p>
+    </header>
 
-  <div class="box">
-    <input id="username" placeholder="Nhập username" />
-    <button onclick="addUser()">Thêm</button>
-  </div>
+    <!-- FORM -->
+    <section>
+      <form id="userForm">
+        <label for="keyword">Tìm user</label>
+        <input
+          type="text"
+          id="keyword"
+          placeholder="Nhập tên (demo)"
+          disabled
+        />
 
-  <h2>Danh sách users</h2>
-  <ul id="userList"></ul>
+        <button type="submit">
+          📥 Tải danh sách user
+        </button>
+      </form>
+    </section>
 
+    <!-- LOADING -->
+    <section id="loading" class="loading hidden">
+      ⏳ Đang tải dữ liệu...
+    </section>
+
+    <!-- RESULT -->
+    <section
+      id="result"
+      class="result hidden users-grid"
+      aria-live="polite"
+    >
+      <!-- User cards sẽ được JS render tại đây -->
+    </section>
+  </main>
+
+  <!-- JS -->
   <script src="app.js"></script>
 </body>
 </html>
