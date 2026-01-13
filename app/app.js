@@ -1,38 +1,60 @@
-const API = "https://social-api.dungnguyen68783979.workers.dev";
+const form = document.getElementById("userForm");
+const loading = document.getElementById("loading");
+const result = document.getElementById("result");
 
-// load danh sách users
-async function loadUsers() {
-  const res = await fetch(`${API}/users`);
-  const data = await res.json();
-
-  const list = document.getElementById("userList");
-  list.innerHTML = "";
-
-  data.forEach(u => {
-    const li = document.createElement("li");
-    li.textContent = u.username || u;
-    list.appendChild(li);
-  });
+function getInitials(name = "?") {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .substring(0, 2)
+    .toUpperCase();
 }
 
-// thêm user
-async function addUser() {
-  const input = document.getElementById("username");
-  const username = input.value.trim();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  if (!username) return alert("Nhập username");
+  loading.classList.remove("hidden");
+  result.classList.add("hidden");
+  result.innerHTML = "";
 
-  await fetch(`${API}/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ username })
-  });
+  try {
+    const res = await fetch(
+      "https://social-api.dungnguyen68783979.workers.dev/users"
+    );
+    const users = await res.json();
 
-  input.value = "";
-  loadUsers();
-}
+    if (!users.length) {
+      result.innerHTML = "<div>❌ Không có user nào</div>";
+    } else {
+      users.forEach((user, index) => {
+        const card = document.createElement("div");
+        card.className = "user-card";
 
-// chạy khi load trang
-loadUsers();
+        card.innerHTML = `
+          <div class="avatar">
+            ${getInitials(user.name || "U")}
+          </div>
+
+          <div class="user-info">
+            <div class="user-name">${user.name || "Unknown User"}</div>
+            <div class="user-meta">User ID: ${user.id || index + 1}</div>
+          </div>
+
+          <div class="badge">
+            ACTIVE
+          </div>
+        `;
+
+        result.appendChild(card);
+      });
+    }
+
+    result.classList.remove("hidden");
+  } catch (err) {
+    result.innerHTML = "<div>⚠️ Lỗi khi gọi API</div>";
+    result.classList.remove("hidden");
+  } finally {
+    loading.classList.add("hidden");
+  }
+});
