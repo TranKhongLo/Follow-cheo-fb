@@ -3,7 +3,12 @@ const form = document.getElementById("userForm");
 const nameInput = document.getElementById("name");
 const fbInput = document.getElementById("facebook");
 
-
+let users = [
+  {
+    name: "Dung Nguyen",
+    fbUrl: "https://facebook.com/dungnguyenvl"
+  }
+];
 
 function avatar(name) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(
