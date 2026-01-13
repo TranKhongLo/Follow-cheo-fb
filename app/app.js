@@ -1,99 +1,106 @@
-const form = document.getElementById("addUserForm");
-const result = document.getElementById("result");
+// ==============================
+// Mini Social App - app.js
+// ==============================
 
-let users = [];
+// DOM
+const usersEl = document.getElementById("users");
+const form = document.getElementById("userForm");
+const nameInput = document.getElementById("name");
+const fbInput = document.getElementById("facebook");
 
-/**
- * Lấy username hoặc ID từ link Facebook
- */
-function extractFacebookId(url) {
-  try {
-    const u = new URL(url);
+// ==============================
+// DATA
+// ==============================
+let users = [
+  {
+    name: "dungnguyen",
+    fbUsername: "dungnguyenvl",
+    fbUrl: "https://facebook.com/dungnguyenvl",
+    type: "FB USER"
+  }
+];
 
-    // facebook.com/username
-    const path = u.pathname.replace("/", "");
+// ==============================
+// HELPERS
+// ==============================
+function getAvatar(username) {
+  return `https://graph.facebook.com/${username}/picture?type=large`;
+}
 
-    if (path && path !== "profile.php") {
-      return path;
+function createUserCard(user) {
+  const card = document.createElement("div");
+  card.className = "user-card";
+
+  card.innerHTML = `
+    <div class="avatar">
+      <img 
+        src="${getAvatar(user.fbUsername)}"
+        alt="${user.name}"
+        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
+          user.name
+        )}&background=6c63ff&color=fff'"
+      >
+    </div>
+
+    <h3>${user.name}</h3>
+
+    <a href="${user.fbUrl}" target="_blank" rel="noopener">
+      🔗 Mở Facebook
+    </a>
+
+    <span class="badge">${user.type}</span>
+  `;
+
+  return card;
+}
+
+// ==============================
+// RENDER
+// ==============================
+function renderUsers() {
+  usersEl.innerHTML = "";
+  users.forEach(user => {
+    usersEl.appendChild(createUserCard(user));
+  });
+}
+
+// ==============================
+// FORM SUBMIT
+// ==============================
+if (form) {
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const name = nameInput.value.trim();
+    const fbLink = fbInput.value.trim();
+
+    if (!name || !fbLink) {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
     }
 
-    // facebook.com/profile.php?id=123
-    return u.searchParams.get("id");
-  } catch {
-    return null;
-  }
-}
+    // Lấy username từ link Facebook
+    const fbUsername = fbLink
+      .replace("https://", "")
+      .replace("http://", "")
+      .replace("www.", "")
+      .replace("facebook.com/", "")
+      .replace("/", "");
 
-// Render users
-function renderUsers() {
-  result.innerHTML = "";
+    const newUser = {
+      name,
+      fbUsername,
+      fbUrl: `https://facebook.com/${fbUsername}`,
+      type: "FB USER"
+    };
 
-  if (users.length === 0) {
-    result.innerHTML = "<p>Chưa có user nào.</p>";
-    return;
-  }
-
-  users.forEach((user) => {
-    const fbId = extractFacebookId(user.fb);
-
-    const avatarUrl = fbId
-      ? `https://graph.facebook.com/${fbId}/picture?type=large`
-      : "";
-
-    const card = document.createElement("div");
-    card.className = "user-card";
-
-    card.innerHTML = `
-      <div class="avatar">
-        ${
-          avatarUrl
-            ? `<img src="${avatarUrl}" alt="avatar" />`
-            : ""
-        }
-      </div>
-
-      <strong>${user.name}</strong>
-
-      <a href="${user.fb}" target="_blank" rel="noopener noreferrer">
-        🔗 Mở Facebook
-      </a>
-
-      <span class="badge user">FB USER</span>
-    `;
-
-    result.appendChild(card);
+    users.push(newUser);
+    renderUsers();
+    form.reset();
   });
 }
 
-// Submit form
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-  const fb = document.getElementById("fb").value.trim();
-
-  if (!name || !fb) {
-    alert("Vui lòng nhập đầy đủ thông tin");
-    return;
-  }
-
-  if (
-    !fb.startsWith("https://facebook.com") &&
-    !fb.startsWith("https://www.facebook.com")
-  ) {
-    alert("Link Facebook không hợp lệ");
-    return;
-  }
-
-  users.push({
-    id: Date.now(),
-    name,
-    fb,
-  });
-
-  form.reset();
-  renderUsers();
-});
-
-// Init
+// ==============================
+// INIT
+// ==============================
 renderUsers();
