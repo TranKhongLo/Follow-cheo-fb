@@ -1,17 +1,14 @@
-// ====== STATE ======
 const form = document.getElementById("addUserForm");
 const result = document.getElementById("result");
 
-// Danh sách user (tạm thời lưu trong bộ nhớ)
 let users = [];
 
-// ====== UTILS ======
+// Lấy chữ cái avatar
 function getInitial(name) {
-  if (!name) return "?";
-  return name.trim().charAt(0).toUpperCase();
+  return name ? name.trim().charAt(0).toUpperCase() : "?";
 }
 
-// ====== RENDER USERS ======
+// Render users
 function renderUsers() {
   result.innerHTML = "";
 
@@ -27,43 +24,44 @@ function renderUsers() {
     card.innerHTML = `
       <div class="avatar">${getInitial(user.name)}</div>
       <strong>${user.name}</strong>
-      <div>${user.email}</div>
-      <span class="badge ${user.role}">${user.role}</span>
+
+      <a href="${user.fb}" target="_blank" rel="noopener noreferrer">
+        🔗 Mở Facebook
+      </a>
+
+      <span class="badge user">FB USER</span>
     `;
 
     result.appendChild(card);
   });
 }
 
-// ====== HANDLE FORM SUBMIT ======
+// Submit form
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const roleSelect = document.getElementById("role");
+  const name = document.getElementById("name").value.trim();
+  const fb = document.getElementById("fb").value.trim();
 
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const role = roleSelect.value;
-
-  if (!name || !email) {
+  if (!name || !fb) {
     alert("Vui lòng nhập đầy đủ thông tin");
     return;
   }
 
-  const newUser = {
+  if (!fb.startsWith("https://facebook.com") && !fb.startsWith("https://www.facebook.com")) {
+    alert("Link Facebook không hợp lệ");
+    return;
+  }
+
+  users.push({
     id: Date.now(),
     name,
-    email,
-    role,
-  };
+    fb,
+  });
 
-  users.push(newUser);
-
-  renderUsers();
   form.reset();
+  renderUsers();
 });
 
-// ====== INIT ======
+// Init
 renderUsers();
