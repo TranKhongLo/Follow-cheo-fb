@@ -10,48 +10,72 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <main class="container">
     <!-- HEADER -->
     <header>
       <h1>👥 Mini Social App</h1>
       <p class="subtitle">
-        Demo UI + API với Cloudflare Workers & Pages
+        Demo UI thêm user + card hiển thị
       </p>
     </header>
 
-    <!-- FORM -->
-    <section>
-      <form id="userForm">
-        <label for="keyword">Tìm user</label>
-        <input
-          type="text"
-          id="keyword"
-          placeholder="Nhập tên (demo)"
-          disabled
-        />
+    <!-- ADD USER FORM -->
+    <section class="card">
+      <h2>➕ Thêm user mới</h2>
 
-        <button type="submit">
-          📥 Tải danh sách user
+      <form id="addUserForm">
+        <div class="form-group">
+          <label for="name">Tên</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Nguyễn Văn A"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="user@email.com"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="role">Vai trò</label>
+          <select id="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value="moderator">Moderator</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          ➕ Thêm user
         </button>
       </form>
     </section>
 
-    <!-- LOADING -->
-    <section id="loading" class="loading hidden">
-      ⏳ Đang tải dữ liệu...
-    </section>
+    <!-- USERS LIST -->
+    <section>
+      <h2>📋 Danh sách users</h2>
 
-    <!-- RESULT -->
-    <section
-      id="result"
-      class="result hidden users-grid"
-      aria-live="polite"
-    >
-      <!-- User cards sẽ được JS render tại đây -->
+      <div
+        id="result"
+        class="users-grid"
+        aria-live="polite"
+      >
+        <!-- User cards render bằng JS -->
+      </div>
     </section>
   </main>
 
   <!-- JS -->
   <script src="app.js"></script>
+
 </body>
 </html>
