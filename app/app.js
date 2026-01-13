@@ -1,106 +1,69 @@
-// ==============================
-// Mini Social App - app.js
-// ==============================
-
-// DOM
 const usersEl = document.getElementById("users");
 const form = document.getElementById("userForm");
 const nameInput = document.getElementById("name");
 const fbInput = document.getElementById("facebook");
 
-// ==============================
-// DATA
-// ==============================
 let users = [
   {
-    name: "dungnguyen",
+    name: "Dung Nguyen",
     fbUsername: "dungnguyenvl",
-    fbUrl: "https://facebook.com/dungnguyenvl",
-    type: "FB USER"
+    fbUrl: "https://facebook.com/dungnguyenvl"
   }
 ];
 
-// ==============================
-// HELPERS
-// ==============================
-function getAvatar(username) {
+function avatarUrl(username) {
   return `https://graph.facebook.com/${username}/picture?type=large`;
 }
 
-function createUserCard(user) {
-  const card = document.createElement("div");
-  card.className = "user-card";
-
-  card.innerHTML = `
-    <div class="avatar">
-      <img 
-        src="${getAvatar(user.fbUsername)}"
-        alt="${user.name}"
-        onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(
-          user.name
-        )}&background=6c63ff&color=fff'"
-      >
-    </div>
-
-    <h3>${user.name}</h3>
-
-    <a href="${user.fbUrl}" target="_blank" rel="noopener">
-      🔗 Mở Facebook
-    </a>
-
-    <span class="badge">${user.type}</span>
-  `;
-
-  return card;
-}
-
-// ==============================
-// RENDER
-// ==============================
 function renderUsers() {
   usersEl.innerHTML = "";
+
   users.forEach(user => {
-    usersEl.appendChild(createUserCard(user));
+    const card = document.createElement("div");
+    card.className = "user-card";
+
+    card.innerHTML = `
+      <div class="avatar">
+        <img 
+          src="${avatarUrl(user.fbUsername)}"
+          alt="${user.name}"
+          onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6c63ff&color=fff'"
+        />
+      </div>
+
+      <strong>${user.name}</strong>
+
+      <a href="${user.fbUrl}" target="_blank">🔗 Facebook</a>
+
+      <span class="badge user">FB USER</span>
+    `;
+
+    usersEl.appendChild(card);
   });
 }
 
-// ==============================
-// FORM SUBMIT
-// ==============================
-if (form) {
-  form.addEventListener("submit", e => {
-    e.preventDefault();
+form.addEventListener("submit", e => {
+  e.preventDefault();
 
-    const name = nameInput.value.trim();
-    const fbLink = fbInput.value.trim();
+  const name = nameInput.value.trim();
+  const fbLink = fbInput.value.trim();
 
-    if (!name || !fbLink) {
-      alert("Vui lòng nhập đầy đủ thông tin");
-      return;
-    }
+  if (!name || !fbLink) return;
 
-    // Lấy username từ link Facebook
-    const fbUsername = fbLink
-      .replace("https://", "")
-      .replace("http://", "")
-      .replace("www.", "")
-      .replace("facebook.com/", "")
-      .replace("/", "");
+  const username = fbLink
+    .replace(/^https?:\/\//, "")
+    .replace("www.", "")
+    .replace("facebook.com/", "")
+    .replace("/", "");
 
-    const newUser = {
-      name,
-      fbUsername,
-      fbUrl: `https://facebook.com/${fbUsername}`,
-      type: "FB USER"
-    };
-
-    users.push(newUser);
-    renderUsers();
-    form.reset();
+  users.push({
+    name,
+    fbUsername: username,
+    fbUrl: `https://facebook.com/${username}`
   });
-}
 
-// ==============================
-// INIT
-// ==============================
+  renderUsers();
+  form.reset();
+});
+
 renderUsers();
