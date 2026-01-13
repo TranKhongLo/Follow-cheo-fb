@@ -3,79 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Mini Social App</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <main class="container">
-    <!-- HEADER -->
-    <header>
-      <h1>👥 Mini Social App</h1>
-      <p class="subtitle">
-        Demo UI thêm user + card hiển thị
-      </p>
-    </header>
+<main class="container">
+  <!-- HEADER -->
+  <header>
+    <h1>👥 Mini Social App</h1>
+    <p class="subtitle">Test app bằng tài khoản Facebook thật (nhập tay)</p>
+  </header>
 
-    <!-- ADD USER FORM -->
-    <section class="card">
-      <h2>➕ Thêm user mới</h2>
+  <!-- ADD USER FORM -->
+  <section class="card">
+    <h2>➕ Thêm user Facebook</h2>
 
-      <form id="addUserForm">
-        <div class="form-group">
-          <label for="name">Tên</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="Nguyễn Văn A"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="user@email.com"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="role">Vai trò</label>
-          <select id="role">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-            <option value="moderator">Moderator</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn-primary">
-          ➕ Thêm user
-        </button>
-      </form>
-    </section>
-
-    <!-- USERS LIST -->
-    <section>
-      <h2>📋 Danh sách users</h2>
-
-      <div
-        id="result"
-        class="users-grid"
-        aria-live="polite"
-      >
-        <!-- User cards render bằng JS -->
+    <form id="addUserForm">
+      <div class="form-group">
+        <label for="name">Tên hiển thị</label>
+        <input
+          type="text"
+          id="name"
+          placeholder="Nguyễn Văn A"
+          required
+        />
       </div>
-    </section>
-  </main>
 
-  <!-- JS -->
-  <script src="app.js"></script>
+      <div class="form-group">
+        <label for="fb">Link Facebook</label>
+        <input
+          type="url"
+          id="fb"
+          placeholder="https://facebook.com/username"
+          required
+        />
+      </div>
 
+      <button type="submit" class="btn-primary">
+        ➕ Thêm user
+      </button>
+    </form>
+  </section>
+
+  <!-- USERS LIST -->
+  <section>
+    <h2>📋 Danh sách users</h2>
+    <div id="result" class="users-grid"></div>
+  </section>
+</main>
+
+<script src="app.js"></script>
 </body>
 </html>
