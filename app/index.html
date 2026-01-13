@@ -4,55 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mini Social App</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
 
-<main class="container">
-  <!-- HEADER -->
-  <header>
-    <h1>👥 Mini Social App</h1>
-    <p class="subtitle">Test app bằng tài khoản Facebook thật (nhập tay)</p>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="app-header">
+    <h1>📋 Danh sách users</h1>
+    <p>Mini Social App – Cloudflare Pages</p>
   </header>
 
-  <!-- ADD USER FORM -->
-  <section class="card">
-    <h2>➕ Thêm user Facebook</h2>
+  <!-- ================= MAIN ================= -->
+  <main class="container">
 
-    <form id="addUserForm">
-      <div class="form-group">
-        <label for="name">Tên hiển thị</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Nguyễn Văn A"
-          required
-        />
-      </div>
+    <!-- ===== FORM ADD USER ===== -->
+    <section class="form-section">
+      <h2>➕ Thêm user Facebook</h2>
 
-      <div class="form-group">
-        <label for="fb">Link Facebook</label>
-        <input
-          type="url"
-          id="fb"
-          placeholder="https://facebook.com/username"
-          required
-        />
-      </div>
+      <form id="userForm" autocomplete="off">
+        <div class="form-group">
+          <label for="name">Tên hiển thị</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Ví dụ: dungnguyen"
+            required
+          />
+        </div>
 
-      <button type="submit" class="btn-primary">
-        ➕ Thêm user
-      </button>
-    </form>
-  </section>
+        <div class="form-group">
+          <label for="facebook">Link Facebook</label>
+          <input
+            type="url"
+            id="facebook"
+            placeholder="https://facebook.com/username"
+            required
+          />
+        </div>
 
-  <!-- USERS LIST -->
-  <section>
-    <h2>📋 Danh sách users</h2>
-    <div id="result" class="users-grid"></div>
-  </section>
-</main>
+        <button type="submit" class="btn-primary">
+          ➕ Thêm user
+        </button>
+      </form>
+    </section>
 
-<script src="app.js"></script>
+    <!-- ===== USER LIST ===== -->
+    <section class="users-section">
+      <div id="users" class="users-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="app-footer">
+    <p>
+      © 2026 · Mini Social App · Built with ❤️ & Cloudflare Pages
+    </p>
+  </footer>
+
+  <!-- JS -->
+  <script src="app.js"></script>
 </body>
 </html>
