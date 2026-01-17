@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Profile của tôi</title>
+  <title>Profile User</title>
 
   <style>
     body {
@@ -15,17 +15,13 @@
       background: white;
       padding: 20px;
       border-radius: 10px;
-      width: 320px;
-    }
-
-    .profile h2 {
-      margin-top: 0;
+      width: 340px;
     }
 
     .fb-link {
       display: inline-block;
       margin-top: 12px;
-      padding: 10px 14px;
+      padding: 8px 14px;
       background: #1877f2;
       color: white;
       text-decoration: none;
@@ -36,22 +32,111 @@
     .fb-link:hover {
       background: #145dbf;
     }
+
+    .follow-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 14px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .follow-btn.following {
+      background: #999;
+      cursor: default;
+    }
   </style>
 </head>
 <body>
 
   <div class="profile">
-    <h2>Dũng Nguyễn</h2>
+    <h2 id="name">Loading...</h2>
 
-    <!-- LINK FACEBOOK CỦA BẠN -->
-    <a
-      class="fb-link"
-      href="https://www.facebook.com/dungnguyenbm"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <!-- Facebook -->
+    <a id="fbLink"
+       class="fb-link"
+       target="_blank"
+       style="display:none">
+      🔗 Facebook
     </a>
+
+    <br>
+
+    <!-- Follow button -->
+    <button id="followBtn"
+            class="follow-btn"
+            style="display:none"
+            onclick="followUser()">
+      Follow
+    </button>
   </div>
+
+  <script>
+    // 👉 ID user đang xem (test)
+    const userId = 2;
+
+    async function loadProfile() {
+      const res = await fetch(
+        `https://social-api.dungnguyen68783979.workers.dev/user/${userId}`,
+        { credentials: 'include' } // QUAN TRỌNG: gửi cookie login
+      );
+
+      if (!res.ok) {
+        alert("Không load được user");
+        return;
+      }
+
+      const user = await res.json();
+
+      // Tên
+      document.getElementById("name").innerText = user.name;
+
+      // Facebook
+      if (user.facebook_url) {
+        const fb = document.getElementById("fbLink");
+        fb.href = user.facebook_url;
+        fb.style.display = "inline-block";
+      }
+
+      // Follow button
+      const btn = document.getElementById("followBtn");
+      btn.style.display = "inline-block";
+
+      if (user.isFollowing) {
+        btn.innerText = "Following";
+        btn.classList.add("following");
+        btn.disabled = true;
+      }
+    }
+
+    async function followUser() {
+      const res = await fetch(
+        "https://social-api.dungnguyen68783979.workers.dev/follow",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include", // gửi cookie login
+          body: JSON.stringify({ following_id: userId })
+        }
+      );
+
+      if (!res.ok) {
+        alert("Follow thất bại (bạn đã login chưa?)");
+        return;
+      }
+
+      const btn = document.getElementById("followBtn");
+      btn.innerText = "Following";
+      btn.classList.add("following");
+      btn.disabled = true;
+    }
+
+    loadProfile();
+  </script>
 
 </body>
 </html>
