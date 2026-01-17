@@ -8,7 +8,7 @@ body {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 300px;
+  width: 340px;
 }
 
 .fb-link {
@@ -24,4 +24,20 @@ body {
 
 .fb-link:hover {
   background: #145dbf;
+}
+
+.follow-btn {
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.follow-btn.following {
+  background: #999;
+  cursor: default;
 }
