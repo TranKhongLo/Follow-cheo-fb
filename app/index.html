@@ -1,21 +1,58 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>User Profile</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Profile của tôi</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+    }
+
+    .profile {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+    }
+
+    .profile h2 {
+      margin-top: 0;
+    }
+
+    .fb-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #1877f2;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .fb-link:hover {
+      background: #145dbf;
+    }
+  </style>
 </head>
 <body>
 
   <div class="profile">
-    <h2 id="name">Loading...</h2>
+    <h2>Dũng Nguyễn</h2>
 
-    <!-- Facebook link -->
-    <a id="fbLink" class="fb-link" target="_blank" style="display:none">
-      https://www.facebook.com/dungnguyenbm
+    <!-- LINK FACEBOOK CỦA BẠN -->
+    <a
+      class="fb-link"
+      href="https://www.facebook.com/dungnguyenbm"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🔗 Facebook: dungnguyenbm
     </a>
   </div>
 
-  <script src="script.js"></script>
 </body>
 </html>
