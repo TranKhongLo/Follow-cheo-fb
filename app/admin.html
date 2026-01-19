@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Bài Viết</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Trang Quản Lý Bài Viết</h1>
+            <a href="index.html">Xem trang chủ</a>
+        </header>
+
+        <main>
+            <!-- Form để thêm hoặc cập nhật bài viết -->
+            <form id="post-form">
+                <h3>Thêm / Cập nhật bài viết</h3>
+                <input type="hidden" id="post-index" value="-1">
+                <div>
+                    <label for="title-input">Tiêu đề:</label>
+                    <input type="text" id="title-input" required>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label for="content-input">Nội dung:</label>
+                    <textarea id="content-input" rows="5" required></textarea>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label for="image-url-input">URL Hình ảnh (tùy chọn):</label>
+                    <input type="url" id="image-url-input" placeholder="https://example.com/image.jpg">
+                </div>
+                <div style="margin-top: 10px;">
+                    <label for="video-url-input">URL Video YouTube (tùy chọn):</label>
+                    <input type="url" id="video-url-input" placeholder="https://www.youtube.com/watch?v=...">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Lưu Bài Viết</button>
+                    <button type="button" id="preview-btn">Xem trước</button>
+                    <button type="button" id="cancel-edit">Hủy</button>
+                </div>
+            </form>
+
+            <hr style="margin: 30px 0;">
+
+            <!-- Danh sách các bài viết hiện có -->
+            <h2>Danh sách bài viết</h2>
+            <div id="posts-list">
+                <!-- Các bài viết sẽ được JS chèn vào đây -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Cấu trúc Modal cho chức năng xem trước -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Xem trước bài viết</h2>
+            <article id="preview-article" class="daily-post-preview">
+                <!-- Nội dung xem trước sẽ được JS chèn vào đây -->
+            </article>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
