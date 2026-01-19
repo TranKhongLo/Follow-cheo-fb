@@ -54,7 +54,7 @@ hr {
     margin-top: 0;
 }
 
-/* ===== PHẦN MỚI: CSS CHO NÚT "XEM CHI TIẾT" ===== */
+/* CSS cho nút "Xem chi tiết / Thu gọn" */
 .toggle-link {
     display: inline-block;
     margin-top: 10px;
@@ -67,7 +67,6 @@ hr {
 .toggle-link:hover {
     text-decoration: underline;
 }
-/* ================================================= */
 
 /* Trang quản lý (admin.html) */
 #post-form input[type="text"],
