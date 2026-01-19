@@ -1,62 +1,60 @@
-// 👉 ID user đang xem (test)
-const userId = 2;
+document.addEventListener('DOMContentLoaded', function() {
+    // Hàm lấy bài viết từ kho lưu trữ của trình duyệt
+    const getPostsFromStorage = () => {
+        const posts = localStorage.getItem('dailyPosts');
+        // Nếu có dữ liệu thì chuyển từ chuỗi JSON thành mảng, nếu không thì trả về mảng rỗng
+        return posts ? JSON.parse(posts) : [];
+    };
+    
+    // Hàm chuyển đổi URL YouTube thông thường thành URL nhúng (embed)
+    const getYouTubeEmbedUrl = (url) => {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        // URL hợp lệ phải có mã video dài 11 ký tự
+        if (match && match[2].length === 11) {
+            return 'https://www.youtube.com/embed/' + match[2];
+        }
+        return null;
+    };
 
-// 👉 URL Worker của bạn
-const API_BASE = "https://social-api.dungnguyen68783979.workers.dev";
+    const posts = getPostsFromStorage();
+    
+    // Lấy các phần tử HTML để cập nhật nội dung
+    const postTitleElement = document.getElementById('post-title');
+    const postContentElement = document.getElementById('post-content');
+    const postMediaElement = document.getElementById('post-media');
 
-const nameEl = document.getElementById("name");
-const fbLink = document.getElementById("fbLink");
-const followBtn = document.getElementById("followBtn");
+    // Kiểm tra xem có bài viết nào không
+    if (posts.length > 0) {
+        const today = new Date();
+        const dayOfMonth = today.getDate(); // Lấy ngày trong tháng (1-31)
+        
+        // Dùng toán tử modulo để chọn một bài viết dựa trên ngày
+        const postIndex = (dayOfMonth - 1) % posts.length;
+        const todaysPost = posts[postIndex];
 
-async function loadProfile() {
-  const res = await fetch(`${API_BASE}/user/${userId}`, {
-    credentials: "include" // gửi cookie login
-  });
+        // Cập nhật tiêu đề và nội dung
+        postTitleElement.textContent = todaysPost.title;
+        postContentElement.innerHTML = todaysPost.content.replace(/\n/g, '<br>'); // Thay ký tự xuống dòng bằng thẻ <br>
 
-  if (!res.ok) {
-    nameEl.innerText = "Không load được user";
-    return;
-  }
-
-  const user = await res.json();
-
-  // Tên
-  nameEl.innerText = user.name;
-
-  // Facebook
-  if (user.facebook_url) {
-    fbLink.href = user.facebook_url;
-    fbLink.style.display = "inline-block";
-  }
-
-  // Follow button
-  followBtn.style.display = "inline-block";
-
-  if (user.isFollowing) {
-    followBtn.innerText = "Following";
-    followBtn.classList.add("following");
-    followBtn.disabled = true;
-  } else {
-    followBtn.onclick = followUser;
-  }
-}
-
-async function followUser() {
-  const res = await fetch(`${API_BASE}/follow`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ following_id: userId })
-  });
-
-  if (!res.ok) {
-    alert("Follow thất bại (bạn đã login chưa?)");
-    return;
-  }
-
-  followBtn.innerText = "Following";
-  followBtn.classList.add("following");
-  followBtn.disabled = true;
-}
-
-loadProfile();
+        // Hiển thị hình ảnh hoặc video nếu có
+        postMediaElement.innerHTML = ''; // Xóa media cũ
+        if (todaysPost.imageUrl) {
+            postMediaElement.innerHTML = `<img src="${todaysPost.imageUrl}" alt="Hình ảnh bài viết">`;
+        } else if (todaysPost.videoUrl) {
+            const embedUrl = getYouTubeEmbedUrl(todaysPost.videoUrl);
+            if (embedUrl) {
+                postMediaElement.innerHTML = `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `;
+            }
+        }
+    } else {
+        // Hiển thị thông báo nếu chưa có bài viết
+        postTitleElement.textContent = "Chưa có bài viết cho hôm nay";
+        postContentElement.textContent = "Vui lòng vào trang quản lý để thêm bài viết mới.";
+    }
+});
