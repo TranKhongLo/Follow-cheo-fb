@@ -1,141 +1,29 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Profile User</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      padding: 40px;
-    }
-
-    .profile {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 340px;
-    }
-
-    .fb-link {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 8px 14px;
-      background: #1877f2;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-
-    .fb-link:hover {
-      background: #145dbf;
-    }
-
-    .follow-btn {
-      display: inline-block;
-      margin-top: 12px;
-      padding: 8px 14px;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .follow-btn.following {
-      background: #999;
-      cursor: default;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Viết Hàng Ngày</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="profile">
-    <h2 id="name">Loading...</h2>
+    <div class="container">
+        <header>
+            <h1>Trang Web Của Tôi</h1>
+            <p>Nơi chia sẻ những điều thú vị mỗi ngày. <a href="admin.html" style="font-size: 0.9em;">(Quản lý)</a></p>
+        </header>
 
-    <!-- Facebook -->
-    <a id="fbLink"
-       class="fb-link"
-       target="_blank"
-       style="display:none">
-    </a>
+        <main>
+            <h2>Bài Viết Của Ngày Hôm Nay</h2>
+            <article id="daily-post">
+                <h3 id="post-title">Đang tải bài viết...</h3>
+                <div id="post-media" style="margin: 20px 0;"></div>
+                <p id="post-content"></p>
+            </article>
+        </main>
+    </div>
 
-    <br>
-
-    <!-- Follow button -->
-    <button id="followBtn"
-            class="follow-btn"
-            style="display:none"
-            onclick="followUser()">
-      Follow
-    </button>
-  </div>
-
-  <script>
-    // 👉 ID user đang xem (test)
-    const userId = 2;
-
-    async function loadProfile() {
-      const res = await fetch(
-        `https://social-api.dungnguyen68783979.workers.dev/user/${userId}`,
-        { credentials: 'include' } // QUAN TRỌNG: gửi cookie login
-      );
-
-      if (!res.ok) {
-        alert("Không load được user");
-        return;
-      }
-
-      const user = await res.json();
-
-      // Tên
-      document.getElementById("name").innerText = user.name;
-
-      // Facebook
-      if (user.facebook_url) {
-        const fb = document.getElementById("fbLink");
-        fb.href = user.facebook_url;
-        fb.style.display = "inline-block";
-      }
-
-      // Follow button
-      const btn = document.getElementById("followBtn");
-      btn.style.display = "inline-block";
-
-      if (user.isFollowing) {
-        btn.innerText = "Following";
-        btn.classList.add("following");
-        btn.disabled = true;
-      }
-    }
-
-    async function followUser() {
-      const res = await fetch(
-        "https://social-api.dungnguyen68783979.workers.dev/follow",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include", // gửi cookie login
-          body: JSON.stringify({ following_id: userId })
-        }
-      );
-
-      if (!res.ok) {
-        alert("Follow thất bại (bạn đã login chưa?)");
-        return;
-      }
-
-      const btn = document.getElementById("followBtn");
-      btn.innerText = "Following";
-      btn.classList.add("following");
-      btn.disabled = true;
-    }
-
-    loadProfile();
-  </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
