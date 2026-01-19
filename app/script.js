@@ -34,12 +34,48 @@ document.addEventListener('DOMContentLoaded', function() {
         const postIndex = (dayOfMonth - 1) % posts.length;
         const todaysPost = posts[postIndex];
 
-        // Cập nhật tiêu đề và nội dung
+        // Cập nhật tiêu đề
         postTitleElement.textContent = todaysPost.title;
-        postContentElement.innerHTML = todaysPost.content.replace(/\n/g, '<br>'); // Thay ký tự xuống dòng bằng thẻ <br>
 
-        // Hiển thị hình ảnh hoặc video nếu có
-        postMediaElement.innerHTML = ''; // Xóa media cũ
+        // ===== LOGIC MỚI CHO "XEM CHI TIẾT" =====
+        const maxLength = 250; // Giới hạn ký tự để hiển thị ban đầu
+        const fullContent = todaysPost.content;
+
+        if (fullContent.length > maxLength) {
+            // Cắt nội dung và tìm khoảng trắng gần nhất để không cắt giữa chữ
+            let shortContent = fullContent.substring(0, maxLength);
+            shortContent = shortContent.substring(0, Math.min(shortContent.length, shortContent.lastIndexOf(" ")));
+
+            // Tạo HTML cho phần rút gọn và phần ẩn đi
+            postContentElement.innerHTML = `
+                <p>${shortContent.replace(/\n/g, '<br>')}...<p>
+                <span class="more-content" style="display: none;">${fullContent.substring(shortContent.length).replace(/\n/g, '<br>')}</span>
+                <a class="toggle-link">Xem chi tiết</a>
+            `;
+
+            // Thêm sự kiện click cho nút "Xem chi tiết / Thu gọn"
+            const toggleLink = postContentElement.querySelector('.toggle-link');
+            toggleLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                const moreContentSpan = postContentElement.querySelector('.more-content');
+
+                if (moreContentSpan.style.display === 'none') {
+                    moreContentSpan.style.display = 'inline';
+                    this.textContent = 'Thu gọn';
+                } else {
+                    moreContentSpan.style.display = 'none';
+                    this.textContent = 'Xem chi tiết';
+                }
+            });
+
+        } else {
+            // Nếu bài viết ngắn, hiển thị toàn bộ
+            postContentElement.innerHTML = `<p>${fullContent.replace(/\n/g, '<br>')}</p>`;
+        }
+        // ===========================================
+
+        // Hiển thị hình ảnh hoặc video (giữ nguyên)
+        postMediaElement.innerHTML = '';
         if (todaysPost.imageUrl) {
             postMediaElement.innerHTML = `<img src="${todaysPost.imageUrl}" alt="Hình ảnh bài viết">`;
         } else if (todaysPost.videoUrl) {
@@ -55,6 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // Hiển thị thông báo nếu chưa có bài viết
         postTitleElement.textContent = "Chưa có bài viết cho hôm nay";
-        postContentElement.textContent = "Vui lòng vào trang quản lý để thêm bài viết mới.";
+        postContentElement.innerHTML = "<p>Vui lòng vào trang quản lý để thêm bài viết mới.</p>";
     }
 });
