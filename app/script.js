@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Cập nhật tiêu đề
         postTitleElement.textContent = todaysPost.title;
 
-        // ===== LOGIC MỚI CHO "XEM CHI TIẾT" =====
+        // ===== LOGIC CHO "XEM CHI TIẾT" VÀ "THU GỌN" =====
         const maxLength = 250; // Giới hạn ký tự để hiển thị ban đầu
         const fullContent = todaysPost.content;
 
