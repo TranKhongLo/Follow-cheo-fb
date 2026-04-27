@@ -3,7 +3,7 @@ function loadApp(type) {
 
   if (type === "youtube") {
     app.innerHTML = `
-      <h2>YouTube Downloader</h2>
+      <h2 class="title">YouTube Downloader</h2>
       <input class="input" placeholder="Dán link YouTube..." />
       <button class="btn">Download</button>
     `;
@@ -11,7 +11,7 @@ function loadApp(type) {
 
   if (type === "merge") {
     app.innerHTML = `
-      <h2>PDF Merge</h2>
+      <h2 class="title">PDF Merge</h2>
       <input type="file" multiple class="input" />
       <button class="btn">Merge</button>
     `;
@@ -19,7 +19,7 @@ function loadApp(type) {
 
   if (type === "split") {
     app.innerHTML = `
-      <h2>PDF Split</h2>
+      <h2 class="title">PDF Split</h2>
       <input type="file" class="input" />
       <button class="btn">Split</button>
     `;
@@ -27,7 +27,7 @@ function loadApp(type) {
 
   if (type === "image") {
     app.innerHTML = `
-      <h2>Image Converter</h2>
+      <h2 class="title">Image Converter</h2>
       <input type="file" class="input" />
       <button class="btn">Convert</button>
     `;
@@ -35,7 +35,7 @@ function loadApp(type) {
 
   if (type === "text") {
     app.innerHTML = `
-      <h2>Text Tools</h2>
+      <h2 class="title">Text Tools</h2>
       <textarea id="text" class="input"></textarea>
       <button class="btn" onclick="toUpper()">Uppercase</button>
     `;
@@ -43,25 +43,22 @@ function loadApp(type) {
 
   if (type === "qr") {
     app.innerHTML = `
-      <h2>QR Generator</h2>
+      <h2 class="title">QR Generator</h2>
       <input id="qrText" class="input" placeholder="Nhập nội dung..." />
       <button class="btn" onclick="genQR()">Generate</button>
-      <canvas id="qrCanvas"></canvas>
+      <canvas id="qrCanvas" class="mt-4 bg-white p-2 rounded"></canvas>
     `;
   }
 }
 
-// Text tool
 function toUpper() {
   const input = document.getElementById("text");
   input.value = input.value.toUpperCase();
 }
 
-// QR tool
 function genQR() {
   const text = document.getElementById("qrText").value;
   const canvas = document.getElementById("qrCanvas");
-
   QRCode.toCanvas(canvas, text);
 }
 
