@@ -1,107 +1,72 @@
-body {
-  margin: 0;
-  font-family: sans-serif;
-}
-
-/* Container */
-.app-container {
-  border-radius: 25px;
-  overflow: hidden;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(10px);
-}
-
-/* Header */
-.header {
-  padding: 20px;
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
-}
-
-/* Layout */
-.main {
-  display: flex;
-  height: calc(100vh - 100px);
-}
-
-/* Sidebar */
-.sidebar {
-  width: 280px;
-  padding: 20px;
-  border-right: 1px solid rgba(255,255,255,0.2);
-}
-
-.sidebar h2 {
-  margin-bottom: 20px;
-}
-
 /* Menu */
 .menu {
-  padding: 14px;
-  margin-bottom: 12px;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.2);
+  padding: 10px 14px;
+  border-radius: 10px;
   cursor: pointer;
+  color: rgba(255,255,255,0.7);
   transition: 0.2s;
 }
 
 .menu:hover {
-  background: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.05);
+  color: white;
 }
 
 .menu.active {
-  background: rgba(255,255,255,0.9);
-  color: purple;
-  font-weight: bold;
-}
-
-/* Content */
-.content {
-  flex: 1;
-  padding: 40px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-weight: 500;
 }
 
 /* Card */
 .card {
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(20px);
-  border-radius: 30px;
-  padding: 40px;
+  background: #020617;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 700px;
 }
 
 /* Title */
 .title {
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 20px;
+  font-weight: 600;
   margin-bottom: 20px;
 }
 
 /* Input */
 .input {
   width: 100%;
-  padding: 16px;
-  border-radius: 20px;
-  border: none;
-  background: rgba(255,255,255,0.25);
-  margin-bottom: 20px;
-  font-size: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #0f172a;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+  color: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #6366f1;
 }
 
 /* Button */
 .btn {
-  padding: 14px 24px;
-  border-radius: 16px;
-  background: white;
-  color: purple;
-  font-weight: bold;
-  margin-bottom: 20px;
+  background: #6366f1;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #4f46e5;
 }
 
 /* QR box */
 .qr-box {
-  width: 60%;
-  height: 220px;
+  margin-top: 20px;
   background: white;
-  border-radius: 16px;
+  padding: 10px;
+  border-radius: 10px;
 }
