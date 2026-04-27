@@ -15,35 +15,39 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 
-<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen p-4">
+<body class="bg-[#0f172a] text-white">
 
-<div class="app-container">
+<div class="flex h-screen">
 
-  <!-- Header -->
-  <header class="header">
-    🚀 Tool Hub Mini App
-  </header>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-[#020617] border-r border-white/10 p-6 flex flex-col">
 
-  <div class="main">
+    <div class="text-xl font-semibold mb-8">🚀 Tool Hub</div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <h2>Danh mục</h2>
+    <nav class="space-y-2">
+      <div class="menu active" onclick="loadApp('qr', this)">QR Generator</div>
+      <div class="menu" onclick="loadApp('text', this)">Text Tools</div>
+      <div class="menu" onclick="loadApp('youtube', this)">YouTube</div>
+      <div class="menu" onclick="loadApp('merge', this)">PDF Merge</div>
+      <div class="menu" onclick="loadApp('split', this)">PDF Split</div>
+    </nav>
 
-      <div class="menu" onclick="loadApp('youtube')">YouTube Downloader</div>
-      <div class="menu" onclick="loadApp('merge')">PDF Merge</div>
-      <div class="menu" onclick="loadApp('split')">PDF Split</div>
-      <div class="menu" onclick="loadApp('image')">Image Converter</div>
-      <div class="menu" onclick="loadApp('text')">Text Tools</div>
-      <div class="menu active" onclick="loadApp('qr')">QR Generator</div>
-    </aside>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-10 overflow-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-2xl font-semibold">Dashboard</h1>
+      <p class="text-white/50 text-sm">All your tools in one place</p>
+    </div>
 
     <!-- Content -->
-    <main class="content">
-      <div id="app"></div>
-    </main>
+    <div id="app"></div>
 
-  </div>
+  </main>
+
 </div>
 
 <script src="app.js"></script>
