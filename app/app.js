@@ -1,9 +1,11 @@
-function setActiveMenu(el) {
+function setActive(el) {
   document.querySelectorAll(".menu").forEach(m => m.classList.remove("active"));
   el.classList.add("active");
 }
 
-function loadApp(type) {
+function loadApp(type, el) {
+  if (el) setActive(el);
+
   const app = document.getElementById("app");
 
   if (type === "qr") {
@@ -11,9 +13,9 @@ function loadApp(type) {
       <div class="card">
         <div class="title">QR Generator</div>
 
-        <input id="qrText" class="input" placeholder="Nhập nội dung..." />
+        <input id="qrText" class="input" placeholder="Enter text..." />
 
-        <button class="btn" onclick="genQR()">Tạo QR</button>
+        <button class="btn" onclick="genQR()">Generate QR</button>
 
         <canvas id="qrCanvas" class="qr-box"></canvas>
       </div>
@@ -61,16 +63,6 @@ function loadApp(type) {
       </div>
     `;
   }
-
-  if (type === "image") {
-    app.innerHTML = `
-      <div class="card">
-        <div class="title">Image Converter</div>
-        <input type="file" class="input" />
-        <button class="btn">Convert</button>
-      </div>
-    `;
-  }
 }
 
 // QR
@@ -86,5 +78,5 @@ function toUpper() {
   input.value = input.value.toUpperCase();
 }
 
-// default
+// default load
 loadApp("qr");
