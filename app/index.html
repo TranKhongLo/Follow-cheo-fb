@@ -1,29 +1,118 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài Viết Hàng Ngày</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
-    <div class="container">
-        <header>
-            <h1>Trang Web Của Tôi</h1>
-            <p>Nơi chia sẻ những điều thú vị mỗi ngày. <a href="admin.html" style="font-size: 0.9em;">(Quản lý)</a></p>
-        </header>
+export default function App() {
+  const [active, setActive] = useState("youtube");
+  const [text, setText] = useState("");
 
-        <main>
-            <h2>Bài Viết Của Ngày Hôm Nay</h2>
-            <article id="daily-post">
-                <h3 id="post-title">Đang tải bài viết...</h3>
-                <div id="post-media" style="margin: 20px 0;"></div>
-                <p id="post-content"></p>
-            </article>
-        </main>
+  const renderApp = () => {
+    switch (active) {
+      case "youtube":
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">YouTube Downloader</h2>
+            <Input placeholder="Paste YouTube link..." />
+            <Button className="mt-3">Download</Button>
+          </div>
+        );
+
+      case "merge":
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">PDF Merge</h2>
+            <Input type="file" multiple />
+            <Button className="mt-3">Merge PDF</Button>
+          </div>
+        );
+
+      case "split":
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">PDF Split</h2>
+            <Input type="file" />
+            <Button className="mt-3">Split PDF</Button>
+          </div>
+        );
+
+      case "image":
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Image Converter</h2>
+            <Input type="file" />
+            <Button className="mt-3">Convert</Button>
+          </div>
+        );
+
+      case "text":
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Text Tools</h2>
+            <Textarea
+              placeholder="Enter text..."
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
+            <Button
+              className="mt-3"
+              onClick={() => setText(text.toUpperCase())}
+            >
+              Uppercase
+            </Button>
+          </div>
+        );
+
+      case "qr":
+        return (
+          <div>
+            <h2 className="text-xl font-bold mb-4">QR Generator</h2>
+            <Input placeholder="Enter text..." />
+            <Button className="mt-3">Generate QR</Button>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white">
+      {/* Header */}
+      <div className="p-4 text-2xl font-bold">Tool Hub</div>
+
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-64 p-4 space-y-2">
+          {[
+            ["youtube", "YouTube Downloader"],
+            ["merge", "PDF Merge"],
+            ["split", "PDF Split"],
+            ["image", "Image Converter"],
+            ["text", "Text Tools"],
+            ["qr", "QR Generator"],
+          ].map(([key, label]) => (
+            <div
+              key={key}
+              onClick={() => setActive(key)}
+              className={`p-3 rounded-xl cursor-pointer $${
+                active === key ? "bg-white text-black" : "bg-white/20"
+              }`}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 p-6">
+          <Card className="bg-white/10 backdrop-blur-xl border-none text-white">
+            <CardContent className="p-6">{renderApp()}</CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+  );
+}
