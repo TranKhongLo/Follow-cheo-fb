@@ -1,13 +1,12 @@
 function loadApp(type) {
   const app = document.getElementById("app");
 
-  // Reset content
   app.innerHTML = "";
 
   if (type === "youtube") {
     app.innerHTML = `
       <h2 class="title">YouTube Downloader</h2>
-      <input id="yt" placeholder="Dán link YouTube..." class="input"/>
+      <input placeholder="Dán link YouTube..." class="input"/>
       <button class="btn">Tải xuống</button>
       <p class="note">* Cần backend để chạy thật</p>
     `;
@@ -62,7 +61,7 @@ function toUpper() {
   input.value = input.value.toUpperCase();
 }
 
-// QR TOOL (CHẠY THẬT)
+// QR TOOL
 function genQR() {
   const text = document.getElementById("qrText").value;
   const canvas = document.getElementById("qrCanvas");
@@ -72,5 +71,7 @@ function genQR() {
   });
 }
 
-// default load
-loadApp("qr");
+// LOAD DEFAULT (QUAN TRỌNG)
+window.onload = () => {
+  loadApp("qr");
+};
