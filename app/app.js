@@ -71,6 +71,21 @@ function genQR() {
   });
 }
 
+// short link
+function createShortLink() {
+  const input = document.getElementById("urlInput").value;
+
+  fetch("https://shortlink-api.dungnguyen68783979.workers.dev/create", {
+    method: "POST",
+    body: JSON.stringify({ url: input })
+  })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("result").innerHTML =
+        `<a href="${data.full}" target="_blank">${data.full}</a>`;
+    });
+}
+
 // LOAD DEFAULT (QUAN TRỌNG)
 window.onload = () => {
   loadApp("qr");
