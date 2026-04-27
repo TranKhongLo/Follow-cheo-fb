@@ -5,42 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tool Hub</title>
 
-  <!-- ✅ Tailwind -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- CSS riêng -->
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 
   <!-- QR -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 </head>
 
-<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen text-white">
+<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen p-4">
 
-<header class="p-4 bg-white/10 backdrop-blur-md shadow-lg">
-  <h1 class="text-2xl font-bold">🚀 Tool Hub Mini App</h1>
-</header>
+<div class="app-container">
 
-<div class="flex h-[calc(100vh-64px)]">
+  <!-- Header -->
+  <header class="header">
+    🚀 Tool Hub Mini App
+  </header>
 
-  <!-- Sidebar -->
-  <aside class="w-64 p-4 bg-white/10 backdrop-blur-lg border-r border-white/20 overflow-auto">
-    <h2 class="text-lg font-semibold mb-4">Danh mục</h2>
-    <ul class="space-y-2">
-      <li onclick="loadApp('youtube')" class="menu">YouTube Downloader</li>
-      <li onclick="loadApp('merge')" class="menu">PDF Merge</li>
-      <li onclick="loadApp('split')" class="menu">PDF Split</li>
-      <li onclick="loadApp('image')" class="menu">Image Converter</li>
-      <li onclick="loadApp('text')" class="menu">Text Tools</li>
-      <li onclick="loadApp('qr')" class="menu">QR Generator</li>
-    </ul>
-  </aside>
+  <div class="main">
 
-  <!-- Content -->
-  <main class="flex-1 p-6 overflow-auto">
-    <div id="app" class="card"></div>
-  </main>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>Danh mục</h2>
 
+      <div class="menu" onclick="loadApp('youtube')">YouTube Downloader</div>
+      <div class="menu" onclick="loadApp('merge')">PDF Merge</div>
+      <div class="menu" onclick="loadApp('split')">PDF Split</div>
+      <div class="menu" onclick="loadApp('image')">Image Converter</div>
+      <div class="menu" onclick="loadApp('text')">Text Tools</div>
+      <div class="menu active" onclick="loadApp('qr')">QR Generator</div>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+      <div id="app"></div>
+    </main>
+
+  </div>
 </div>
 
 <script src="app.js"></script>
